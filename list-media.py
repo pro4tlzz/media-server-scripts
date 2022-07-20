@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-from msilib.schema import Directory
-from operator import ge
 import requests
 import os
 
