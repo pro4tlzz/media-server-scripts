@@ -6,9 +6,9 @@
         async function listMedia() {
         
             var mediaList = [];
-            const limit = 100;
-            var skip = 100;
-            var url = '/api/v1/media?take=' + limit ;
+            const limit = 25;
+            var skip = 25;
+            var url = '/api/v1/media?filter=all&take=' + limit ;
             
             while (url) {
                 
@@ -22,8 +22,8 @@
     
                 if (page < pages) {
                 
-                    skip += 100;
-                    var url = '/api/v1/media?take=' + limit + '&skip=' + skip;
+                    skip += 25;
+                    var url = '/api/v1/media?filter=all&take=' + limit + '&skip=' + skip;
     
                 }
                 else { 
