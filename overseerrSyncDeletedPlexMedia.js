@@ -1,35 +1,42 @@
-async function  getMe() {
-    const url = '/api/v1/auth/me';
-    const r = await fetch (url, {method: 'get'});
-    const res = await r.json();
-    console.log(res);
-}
+(async function () {
 
-async function listMedia(mediaList) {
-    const limit = 20;
-    var skip = 20;
-    const url = '/api/v1/media?take=' + limit ;
-    const r = await fetch (url, {method: 'get'});
-    const res = await r.json();
-    console.log(res);
-    var results = res.results;
-    mediaList.push(results);
-    console.table(results);
-    const pageInfo = res.pageInfo;
-    const page = pageInfo.page;
-    const pages = pageInfo.pages;
+    const mediaList = await listMedia();
+    console.table(mediaList);
 
-    if (page != pages) {
-        skip += 20;
-        const url = '/api/v1/media?take=' + limit + '&skip=' + skip ;
-        console.log(url);
-        const r = await fetch (url, {method: 'get'});
-        const res = await r.json();
-        console.log(res);
+        async function listMedia() {
+        
+        var mediaList = [];
+        const limit = 100;
+        var skip = 100;
+        var url = '/api/v1/media?take=' + limit ;
+        
+        while (url) {
+            
+            const r = await fetch (url, {method: 'get'});
+            const res = await r.json();
+            
+            const pageInfo = res.pageInfo;
+            const page = pageInfo.page;
+            const pages = pageInfo.pages;
+
+            if (page < pages) {
+            
+                skip += 100;
+                var url = '/api/v1/media?take=' + limit + '&skip=' + skip ;
+                const r = await fetch (url, {method: 'get'});
+                const res = await r.json();
+                var results = res.results;
+                mediaList = mediaList.concat(results);
+
+            }
+            else { 
+            
+                console.table(mediaList);
+                return mediaList; 
+                
+            }
     }
 
 }
-
-var mediaList = [];
-await getMe();
-await listMedia(mediaList);
+}
+)();
