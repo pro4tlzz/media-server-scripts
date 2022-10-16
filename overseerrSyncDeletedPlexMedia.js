@@ -14,7 +14,8 @@
             
             const r = await fetch (url, {method: 'get'});
             const res = await r.json();
-            
+            var results = res.results;
+            mediaList = mediaList.concat(results);
             const pageInfo = res.pageInfo;
             const page = pageInfo.page;
             const pages = pageInfo.pages;
@@ -23,16 +24,16 @@
             
                 skip += 100;
                 var url = '/api/v1/media?take=' + limit + '&skip=' + skip;
-                var results = res.results;
-                mediaList = mediaList.concat(results);
 
             }
             else { 
-            
+
+                mediaList = mediaList.concat(results);
                 console.table(mediaList);
                 return mediaList; 
                 
             }
+
     }
 
 }
