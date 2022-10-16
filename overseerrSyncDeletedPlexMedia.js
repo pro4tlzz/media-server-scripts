@@ -22,9 +22,7 @@
             if (page < pages) {
             
                 skip += 100;
-                var url = '/api/v1/media?take=' + limit + '&skip=' + skip ;
-                const r = await fetch (url, {method: 'get'});
-                const res = await r.json();
+                var url = '/api/v1/media?take=' + limit + '&skip=' + skip;
                 var results = res.results;
                 mediaList = mediaList.concat(results);
 
